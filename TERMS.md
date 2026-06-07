@@ -57,8 +57,8 @@ constitutes acceptance of the revised Terms.
 
 Questions about these Terms can be sent to the developer:
 
-- **Developer:** _[Your name / company]_
-- **Email:** _[your-support-email@example.com]_
+- **Developer:** _Sahinur_
+- **Email:** _infosahinur@gmail.com_
 
 ---
 

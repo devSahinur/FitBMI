@@ -86,8 +86,8 @@ here with a new "Last updated" date.
 
 For privacy questions, contact the developer:
 
-- **Developer:** _[Your name / company]_
-- **Email:** _[your-support-email@example.com]_
+- **Developer:** _Sahinur_
+- **Email:** _infosahinur@gmail.com_
 
 ---
 
