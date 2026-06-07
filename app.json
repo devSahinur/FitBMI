@@ -26,7 +26,6 @@
     },
     "android": {
       "package": "com.sahinur.fitbmi",
-      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "monochromeImage": "./src/assets/images/adaptive-icon-monochrome.png",
@@ -68,12 +67,13 @@
     "experiments": {
       "typedRoutes": true
     },
+    "owner": "sahinur",
     "extra": {
       "router": {
         "origin": false
       },
       "eas": {
-        "projectId": "00000000-0000-0000-0000-000000000000"
+        "projectId": "faaae079-ac35-43b2-9945-300615a22c01"
       }
     }
   }
