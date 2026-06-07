@@ -29,6 +29,7 @@ import {
   useGamificationStore,
   DAILY_CHALLENGES,
 } from '@/store/gamification.store';
+import { useStepLiveStore } from '@/store/steps.store';
 import { lastNDays, toDateKey } from '@/utils/date';
 import { average, trendPct } from '@/utils/stats';
 import { calculateBMI } from '@/utils/bmi';
@@ -54,6 +55,7 @@ export function TrackerScreen() {
   const { profile, goals } = useProfileStore();
   const unlock = useAchievementsStore((s) => s.unlock);
   const streak = useStreak();
+  const stepsLive = useStepLiveStore((s) => s.live);
 
   const [metric, setMetric] = useState<Metric>('weight');
   const [range, setRange] = useState<Range>(7);
@@ -162,6 +164,15 @@ export function TrackerScreen() {
     <View style={styles.fill}>
       <ScreenContainer>
       <SectionHeader title="Health Tracker" />
+
+      {stepsLive && (
+        <View style={styles.liveRow}>
+          <View style={styles.liveDot} />
+          <Text variant="label" tone="muted">
+            Live step tracking · {today?.steps ?? 0} steps today
+          </Text>
+        </View>
+      )}
 
       {/* Streak */}
       <AnimatedCard index={0} style={styles.streakCard}>
@@ -357,6 +368,13 @@ export function TrackerScreen() {
 
 const styles = StyleSheet.create({
   fill: { flex: 1 },
+  liveRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  liveDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: palette.success,
+  },
   streakCard: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   rings: { gap: 20, paddingVertical: 8, paddingRight: 8 },
   statGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },

@@ -5,11 +5,15 @@ import { Platform, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { Home, Calculator, Activity, User, Sparkles } from 'lucide-react-native';
 import { useTheme } from '@/hooks/useTheme';
+import { useStepTracking } from '@/hooks/useStepTracking';
 import { palette } from '@/theme';
 
 export default function TabsLayout() {
   const { colors, isDark } = useTheme();
   const { t } = useTranslation();
+
+  // Start live step tracking for the whole tab session.
+  useStepTracking();
 
   return (
     <Tabs

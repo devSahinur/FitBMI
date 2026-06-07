@@ -23,11 +23,13 @@ and **runs in Expo Go (SDK 54)** — no custom dev client required.
   healthy result.
 - **AI Studio** — Health Coach chat + Meal Plan, Workout, Recipe, Goal Planner
   and Weekly Report generators (see below).
-- **Health Tracker** — weight, body fat %, water, calories, sleep, steps;
-  progress rings, weekly/monthly SVG trend charts, stats cards, streaks, and an
-  **expandable speed-dial FAB** for quick logging.
-- **Profile** — avatar, details, units, theme mode + variant, language,
-  notification toggles, premium flags, achievements, data backup, legal screens.
+- **Health Tracker** — weight, body fat %, water, calories, sleep, and
+  **live step tracking** (device pedometer via `expo-sensors`); progress rings,
+  weekly/monthly SVG trend charts, stats cards, streaks, and an **expandable
+  speed-dial FAB** for quick logging.
+- **Profile** — avatar, details, units, theme mode + variant, **language picker
+  (7 languages)**, notification toggles, premium flags, achievements, data
+  backup, legal screens.
 - **Achievements & Gamification** — XP, levels, coins, daily check-ins, reward
   wheel, daily challenges, animated badges + confetti.
 - **Notifications** — local daily reminders (water, weight, sleep, motivation).
@@ -189,27 +191,82 @@ npm test
 **Detox** e2e is scaffolded in `e2e/` + `.detoxrc.js` (requires `expo prebuild`
 and a native build — it does not run in Expo Go).
 
-## 🏗️ Building for Google Play
+## 🏗️ Publishing to Google Play (step by step)
+
+Prerequisites: a paid Google Play Console account, an Expo account, and the
+EAS CLI (`npm i -g eas-cli`).
+
+### 1. Configure the app
+
+In `app.json` (`expo.android`):
+
+- `package` — set a unique application id you own (e.g. `com.yourname.fitbmi`).
+- `versionCode` — integer, increment every upload (EAS can auto-increment).
+- `version` — user-facing version (e.g. `1.0.0`).
+- Adaptive icon + monochrome (themed) icon and splash are already configured.
+- Declared permissions: `ACTIVITY_RECOGNITION` (steps), `POST_NOTIFICATIONS`,
+  `VIBRATE`, `RECEIVE_BOOT_COMPLETED`.
+
+> If you don't use live step tracking, remove `expo-sensors` and the
+> `ACTIVITY_RECOGNITION` permission to simplify the Data Safety form.
+
+### 2. Add your production AI key
+
+`EXPO_PUBLIC_*` vars are inlined into the JS bundle at build time. For a real
+release set the key as an EAS build env var (don't ship a personal key):
 
 ```bash
-eas build  --profile production --platform android   # .aab
-eas submit --profile production --platform android   # internal track, draft
+eas env:create --name EXPO_PUBLIC_OPENROUTER_API_KEY --value "sk-or-..." \
+  --environment production
 ```
 
-App config (`app.json`):
+(Or omit it — AI features degrade gracefully and the rest of the app works.)
 
-- `android.package`: `com.fitbmi.app` — change to your own.
-- Adaptive icon + monochrome (themed icon) configured.
-- Targets the latest Android API via Expo SDK 54.
-- Permissions: ACTIVITY_RECOGNITION, POST_NOTIFICATIONS, VIBRATE,
-  RECEIVE_BOOT_COMPLETED.
+### 3. Build the release bundle (.aab)
 
-### Play Store checklist
+```bash
+eas login
+eas build:configure          # first time only
+eas build --profile production --platform android
+```
 
-- ✅ Privacy Policy (`/privacy`) — host publicly and link in the Data Safety form.
-- ✅ Terms & Conditions (`/terms`) and in-app medical disclaimer.
-- ✅ No backend; all data stays on device (declare in Data Safety).
-- ✅ Ads disabled by default.
+This produces an Android App Bundle (`.aab`). EAS manages the upload signing
+key automatically (Play App Signing).
+
+### 4. Create the Play Console listing
+
+In [Play Console](https://play.google.com/console) → **Create app**, then fill:
+
+- **Store listing**: app name (FitBMI), short + full description, app icon
+  (512×512), feature graphic (1024×500), and **2–8 phone screenshots**
+  (take them from Expo Go / an emulator).
+- **App content**: Privacy Policy URL (host the text from `/privacy` publicly —
+  e.g. a GitHub Pages / Notion page), content rating questionnaire, target
+  audience, ads declaration (**No ads**), and the **Data Safety** form.
+- **Health disclaimer**: the in-app disclaimer ("not medical advice") also
+  appears on the Privacy/Terms screens — keep it in your listing description.
+
+### 5. Data Safety form — what to declare
+
+- **Data collected/shared with us:** none (no backend).
+- **Stored on device:** profile + health metrics (local only).
+- **Shared with third parties:** when AI features are used, the request text +
+  basic profile context is sent to **OpenRouter** for processing (declare as
+  "Health & fitness" / "App activity", purpose: app functionality, not for ads).
+- **Permissions:** Physical activity (steps), Notifications.
+
+### 6. Submit
+
+```bash
+# Optional: let EAS upload to an internal track as a draft
+eas submit --profile production --platform android
+```
+
+Then in Play Console: create a release (Internal testing → Closed → Production),
+attach the build, complete the content declarations, and roll out.
+
+> Tip: start with the **Internal testing** track to validate the build on real
+> devices before promoting to Production.
 
 ## 💰 Ads & 🔐 Premium
 

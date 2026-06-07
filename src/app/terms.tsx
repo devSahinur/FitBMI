@@ -10,28 +10,41 @@ export default function Terms() {
       sections={[
         {
           heading: 'Acceptance',
-          body: 'By using FitBMI you agree to these terms. If you do not agree, please discontinue use of the app.',
+          body: 'By downloading or using FitBMI you agree to these Terms. If you do not agree, please discontinue use of the app.',
         },
         {
           heading: 'Not Medical Advice',
-          body: DISCLAIMER +
-            ' BMI is a general screening metric and does not account for muscle mass, body composition, pregnancy, or other factors. Always consult a qualified healthcare professional for medical decisions.',
+          body:
+            DISCLAIMER +
+            ' BMI is a general screening metric and does not account for muscle mass, body composition, pregnancy, age, ethnicity, or other factors. Always consult a qualified healthcare professional before making health, diet, or exercise decisions.',
+        },
+        {
+          heading: 'AI Features',
+          body: 'AI-generated content (coaching chat, insights, meal/workout/recipe/goal/report suggestions) is produced by third-party AI models and may be inaccurate, incomplete, or unsuitable for your situation. It is provided for general information only and is not professional, medical, or nutritional advice. Verify anything important before acting on it.',
         },
         {
           heading: 'Your Responsibilities',
-          body: 'You are responsible for the accuracy of the data you enter and for how you interpret and act on the information the app provides.',
+          body: 'You are responsible for the accuracy of the data you enter and for how you interpret and act on the information the app provides, including AI output and step/activity data.',
+        },
+        {
+          heading: 'Acceptable Use',
+          body: 'You agree not to misuse the app, attempt to disrupt it, or use it for any unlawful purpose. AI features must not be used to generate harmful, abusive, or unlawful content.',
         },
         {
           heading: 'Premium & Purchases',
-          body: 'Optional premium features may be offered via in-app purchase. Purchases are handled by the platform app store and are subject to its refund policies.',
+          body: 'Optional premium features may be offered via in-app purchase. Purchases, billing, and refunds are handled by the platform app store (Google Play / App Store) under its policies. Subscriptions renew until cancelled in your store account.',
         },
         {
           heading: 'Limitation of Liability',
-          body: 'FitBMI is provided “as is” without warranties of any kind. The developer is not liable for any health outcomes or losses arising from use of the app.',
+          body: 'FitBMI is provided “as is” and “as available”, without warranties of any kind. To the maximum extent permitted by law, the developer is not liable for any health outcomes, data loss, or damages arising from use of the app.',
         },
         {
           heading: 'Changes',
-          body: 'We may update these terms. Continued use after changes constitutes acceptance of the revised terms.',
+          body: 'We may update these Terms as the app evolves. Continued use after changes constitutes acceptance of the revised Terms.',
+        },
+        {
+          heading: 'Contact',
+          body: 'Questions about these Terms can be sent to the developer via the support email on the app’s store listing.',
         },
       ]}
     />

@@ -6,6 +6,7 @@ export { useAchievementsStore } from './achievements.store';
 export { usePremiumStore } from './premium.store';
 export { useChatStore } from './chat.store';
 export { useAppStore } from './app.store';
+export { useStepLiveStore } from './steps.store';
 export {
   useGamificationStore,
   DAILY_CHALLENGES,
