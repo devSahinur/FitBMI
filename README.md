@@ -268,6 +268,64 @@ attach the build, complete the content declarations, and roll out.
 > Tip: start with the **Internal testing** track to validate the build on real
 > devices before promoting to Production.
 
+## 🛍️ Store Listing (copy-paste)
+
+> Character limits: **Title** ≤ 30, **Short description** ≤ 80, **Full
+> description** ≤ 4000. Category: **Health & Fitness**. Ads: **No**.
+
+**Title**
+
+```
+FitBMI – BMI & AI Coach
+```
+
+**Short description**
+
+```
+BMI calculator, AI coach, step, water & sleep tracker. Private & offline.
+```
+
+**Full description**
+
+```
+FitBMI is a beautiful, privacy-first BMI calculator and health tracker with a built-in AI health coach. Calculate your BMI, build healthy habits, and get personalised guidance — all while your data stays on your device.
+
+★ BMI CALCULATOR
+• Metric & imperial units
+• Animated gauge with color-coded categories
+• Healthy weight range and smart recommendations
+
+★ AI HEALTH COACH
+• Chat for fitness, nutrition, water, sleep & calorie advice
+• Daily AI insights on your home screen
+• Generate meal plans, workouts, recipes, goal plans and weekly reports
+(AI responses are informational only and not medical advice.)
+
+★ HEALTH TRACKER
+• Live step tracking with your device’s pedometer
+• Log weight, body fat, water, sleep and calories
+• Weekly & monthly charts and statistics
+
+★ STAY MOTIVATED
+• Streaks, XP, levels, coins and a daily reward wheel
+• Achievements and daily challenges
+• Friendly local reminders
+
+★ BEAUTIFUL & PRIVATE
+• Light, Dark and AMOLED modes + 6 theme styles
+• 7 languages (English, Español, Français, Deutsch, العربية, हिन्दी, বাংলা)
+• Works offline — no account required, your data stays on your device
+• Export your history as CSV or a report
+
+Start your journey to a healthier you with FitBMI today!
+
+Disclaimer: This app is intended for general fitness and wellness purposes and does not provide medical advice. Always consult a qualified healthcare professional for medical decisions.
+```
+
+**Suggested tags / search terms:** BMI calculator, body mass index, weight
+tracker, AI fitness coach, step counter, water tracker, sleep tracker, health
+diary.
+
 ## 💰 Ads & 🔐 Premium
 
 - Ads are abstracted in `services/admob.service.ts` (banner / interstitial /
