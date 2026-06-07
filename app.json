@@ -18,14 +18,14 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.fitbmi.app",
+      "bundleIdentifier": "com.sahinur.fitbmi",
       "infoPlist": {
         "NSMotionUsageDescription": "FitBMI uses motion data to count your daily steps.",
         "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
-      "package": "com.fitbmi.app",
+      "package": "com.sahinur.fitbmi",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/adaptive-icon.png",

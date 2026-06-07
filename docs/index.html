@@ -3,54 +3,257 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>FitBMI — Legal</title>
-    <meta name="description" content="FitBMI app legal documents." />
+    <title>FitBMI — BMI Calculator &amp; AI Health Coach</title>
+    <meta
+      name="description"
+      content="FitBMI is a beautiful, privacy-first BMI calculator and health tracker with an AI health coach. By Sahinur."
+    />
+    <meta property="og:title" content="FitBMI — BMI Calculator & AI Health Coach" />
+    <meta
+      property="og:description"
+      content="Track your BMI, build healthy habits, and get personalised AI guidance. Private & offline."
+    />
+    <meta property="og:image" content="./assets/feature.png" />
     <style>
+      :root {
+        --primary: #00c897;
+        --secondary: #00a8ff;
+        --accent: #ffb800;
+        --ink: #0f172a;
+        --muted: #64748b;
+        --bg: #f7f8fa;
+        --card: #ffffff;
+        --border: #e6eaf0;
+      }
       * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
       body {
         margin: 0;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           Helvetica, Arial, sans-serif;
-        background: linear-gradient(135deg, #00c897, #00a8ff);
-        color: #fff;
-        text-align: center;
-        padding: 24px;
+        color: var(--ink);
+        background: var(--bg);
+        line-height: 1.6;
       }
-      .badge {
-        width: 84px; height: 84px; border-radius: 24px;
-        background: rgba(255, 255, 255, 0.18);
-        display: flex; align-items: center; justify-content: center;
-        margin: 0 auto 20px;
+      a { color: inherit; text-decoration: none; }
+      .container { max-width: 1100px; margin: 0 auto; padding: 0 22px; }
+
+      /* Nav */
+      header {
+        position: sticky; top: 0; z-index: 20;
+        background: rgba(247, 248, 250, 0.85);
+        backdrop-filter: saturate(160%) blur(12px);
+        border-bottom: 1px solid var(--border);
       }
-      .badge svg { width: 52px; height: 52px; }
-      h1 { margin: 0 0 6px; font-size: 34px; }
-      p { margin: 0 0 28px; opacity: 0.9; }
-      .links { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-      a {
-        background: #fff; color: #0f172a; text-decoration: none;
-        font-weight: 600; padding: 14px 26px; border-radius: 999px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      .nav { display: flex; align-items: center; gap: 14px; height: 64px; }
+      .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; }
+      .brand img { width: 32px; height: 32px; border-radius: 9px; }
+      .nav .spacer { flex: 1; }
+      .nav a.link { color: var(--muted); font-weight: 600; font-size: 15px; }
+      .nav a.link:hover { color: var(--ink); }
+      @media (max-width: 620px) { .nav a.link { display: none; } }
+
+      /* Hero */
+      .hero { position: relative; overflow: hidden; padding: 72px 0 40px; }
+      .hero::before {
+        content: ""; position: absolute; width: 620px; height: 620px;
+        right: -180px; top: -220px; border-radius: 50%;
+        background: radial-gradient(circle at center, rgba(0, 200, 151, 0.18), transparent 70%);
       }
+      .hero-grid {
+        display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center;
+      }
+      @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; text-align: center; } }
+      .pill {
+        display: inline-flex; align-items: center; gap: 8px;
+        background: rgba(0, 200, 151, 0.1); color: #00866a;
+        padding: 6px 14px; border-radius: 999px; font-weight: 700; font-size: 13px;
+      }
+      h1 { font-size: 46px; line-height: 1.1; margin: 18px 0 14px; letter-spacing: -0.5px; }
+      h1 .grad {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
+      .lead { font-size: 19px; color: var(--muted); margin: 0 0 26px; }
+      .cta { display: flex; gap: 12px; flex-wrap: wrap; }
+      @media (max-width: 860px) { .cta { justify-content: center; } }
+      .btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 14px 24px; border-radius: 999px; font-weight: 700; font-size: 15px;
+      }
+      .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; box-shadow: 0 12px 30px rgba(0, 168, 255, 0.3); }
+      .btn-ghost { background: var(--card); border: 1px solid var(--border); color: var(--ink); }
+      .hero-phone { display: flex; justify-content: center; }
+      .hero-phone img {
+        width: 270px; max-width: 80%; border-radius: 32px;
+        box-shadow: 0 30px 70px rgba(15, 23, 42, 0.22);
+        border: 1px solid var(--border);
+      }
+      .credit { margin-top: 18px; color: var(--muted); font-size: 14px; }
+      .credit b { color: var(--ink); }
+
+      /* Sections */
+      section { padding: 56px 0; }
+      .section-title { text-align: center; font-size: 30px; margin: 0 0 8px; }
+      .section-sub { text-align: center; color: var(--muted); margin: 0 auto 36px; max-width: 560px; }
+
+      /* Features */
+      .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+      @media (max-width: 860px) { .features { grid-template-columns: 1fr 1fr; } }
+      @media (max-width: 560px) { .features { grid-template-columns: 1fr; } }
+      .feature {
+        background: var(--card); border: 1px solid var(--border);
+        border-radius: 20px; padding: 22px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      }
+      .feature .ic {
+        width: 46px; height: 46px; border-radius: 13px; display: flex;
+        align-items: center; justify-content: center; margin-bottom: 12px; font-size: 22px;
+        background: rgba(0, 200, 151, 0.12);
+      }
+      .feature h3 { margin: 0 0 4px; font-size: 17px; }
+      .feature p { margin: 0; color: var(--muted); font-size: 14px; }
+
+      /* Screenshots */
+      .shots { display: flex; gap: 18px; overflow-x: auto; padding: 8px 4px 18px; scroll-snap-type: x mandatory; }
+      .shots img {
+        width: 230px; flex: 0 0 auto; border-radius: 26px; scroll-snap-align: center;
+        border: 1px solid var(--border); box-shadow: 0 18px 44px rgba(15, 23, 42, 0.12); background: #fff;
+      }
+
+      /* CTA band */
+      .band {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        border-radius: 28px; color: #fff; text-align: center; padding: 44px 24px;
+      }
+      .band h2 { margin: 0 0 8px; font-size: 28px; }
+      .band p { margin: 0 0 22px; opacity: 0.92; }
+
+      /* Footer */
+      footer { border-top: 1px solid var(--border); padding: 30px 0 50px; color: var(--muted); font-size: 14px; }
+      .foot { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+      .foot .spacer { flex: 1; }
+      .foot a { color: var(--muted); font-weight: 600; }
+      .foot a:hover { color: var(--ink); }
     </style>
   </head>
   <body>
-    <div>
-      <div class="badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M3 12h4l2-5 4 10 2-5h6" />
-        </svg>
+    <header>
+      <div class="container nav">
+        <a class="brand" href="#top">
+          <img src="./assets/icon.png" alt="FitBMI" />
+          FitBMI
+        </a>
+        <span class="spacer"></span>
+        <a class="link" href="#features">Features</a>
+        <a class="link" href="#screens">Screenshots</a>
+        <a class="link" href="./privacy.html">Privacy</a>
+        <a class="link" href="./terms.html">Terms</a>
       </div>
-      <h1>FitBMI</h1>
-      <p>BMI Calculator &amp; AI Health Coach — Legal</p>
-      <div class="links">
-        <a href="./privacy.html">Privacy Policy</a>
-        <a href="./terms.html">Terms &amp; Conditions</a>
+    </header>
+
+    <a id="top"></a>
+    <div class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="pill">⚡ Private &amp; offline · AI-powered</span>
+          <h1>Your health, <span class="grad">beautifully tracked</span></h1>
+          <p class="lead">
+            FitBMI is a modern BMI calculator and health tracker with a built-in
+            AI health coach. Calculate your BMI, build healthy habits, and get
+            personalised guidance — all while your data stays on your device.
+          </p>
+          <div class="cta">
+            <a class="btn btn-primary" href="#screens">See it in action</a>
+            <a class="btn btn-ghost" href="#features">Explore features</a>
+          </div>
+          <p class="credit">
+            Designed &amp; built by <b>Sahinur</b> ·
+            <a href="mailto:infosahinur@gmail.com">infosahinur@gmail.com</a>
+          </p>
+        </div>
+        <div class="hero-phone">
+          <img src="./assets/shot-home.png" alt="FitBMI home screen" />
+        </div>
       </div>
     </div>
+
+    <section id="features">
+      <div class="container">
+        <h2 class="section-title">Everything you need to stay on track</h2>
+        <p class="section-sub">
+          A complete wellness companion — calculator, coach, and tracker in one.
+        </p>
+        <div class="features">
+          <div class="feature">
+            <div class="ic">📊</div>
+            <h3>BMI Calculator</h3>
+            <p>Animated gauge, color-coded categories, and your healthy range.</p>
+          </div>
+          <div class="feature">
+            <div class="ic">🤖</div>
+            <h3>AI Health Coach</h3>
+            <p>Chat for fitness, nutrition, water, sleep &amp; calorie advice.</p>
+          </div>
+          <div class="feature">
+            <div class="ic">👟</div>
+            <h3>Live Step Tracking</h3>
+            <p>Real-time steps from your device pedometer, plus daily goals.</p>
+          </div>
+          <div class="feature">
+            <div class="ic">💧</div>
+            <h3>Daily Tracking</h3>
+            <p>Weight, water, sleep, calories &amp; body fat with rich charts.</p>
+          </div>
+          <div class="feature">
+            <div class="ic">🏆</div>
+            <h3>Streaks &amp; Rewards</h3>
+            <p>XP, levels, coins, a reward wheel and achievements to stay motivated.</p>
+          </div>
+          <div class="feature">
+            <div class="ic">🎨</div>
+            <h3>Beautiful &amp; Private</h3>
+            <p>Light, Dark &amp; AMOLED themes, 7 languages, no account needed.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="screens" style="background: #eef2f8;">
+      <div class="container">
+        <h2 class="section-title">Take a look</h2>
+        <p class="section-sub">A clean, modern interface in light and dark.</p>
+        <div class="shots">
+          <img src="./assets/shot-home.png" alt="Home" />
+          <img src="./assets/shot-bmi.png" alt="BMI calculator" />
+          <img src="./assets/shot-coach.png" alt="AI health coach" />
+          <img src="./assets/shot-tracker.png" alt="Health tracker" />
+          <img src="./assets/shot-profile.png" alt="Profile" />
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="band">
+          <h2>Start your journey to a healthier you</h2>
+          <p>Private by design. Your data never leaves your device.</p>
+          <a class="btn btn-ghost" href="#top" style="background:#fff;color:#0f172a;">Back to top ↑</a>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container foot">
+        <div>© 2026 FitBMI · Built by <b style="color:var(--ink)">Sahinur</b></div>
+        <span class="spacer"></span>
+        <a href="mailto:infosahinur@gmail.com">Contact</a>
+        <a href="./privacy.html">Privacy Policy</a>
+        <a href="./terms.html">Terms</a>
+      </div>
+      <div class="container" style="margin-top:14px; font-size:12px;">
+        This app is intended for general fitness and wellness purposes and does
+        not provide medical advice.
+      </div>
+    </footer>
   </body>
 </html>
