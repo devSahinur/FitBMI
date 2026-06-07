@@ -11,7 +11,7 @@ import { ADMOB_TEST_IDS } from '@/constants';
  *   3. Replace the no-op implementations below with SDK calls
  *   4. Flip `AdMobService.enabled` (gated by the premium "removeAds" flag)
  */
-export type AdUnit = 'banner' | 'interstitial' | 'rewarded';
+export type AdUnit = 'banner' | 'interstitial' | 'rewarded' | 'appOpen';
 
 interface AdMobConfig {
   enabled: boolean;
@@ -58,6 +58,12 @@ class AdMobServiceImpl {
     if (!this.config.enabled) return { rewarded: false };
     // load + show rewarded here
     return { rewarded: false };
+  }
+
+  async showAppOpen(): Promise<boolean> {
+    if (!this.config.enabled) return false;
+    // load + show app-open ad here (e.g. on cold start / foreground)
+    return false;
   }
 }
 

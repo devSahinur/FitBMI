@@ -24,7 +24,7 @@ export function LegalScreen({ title, updated, sections, footer }: LegalScreenPro
   const insets = useSafeAreaInsets();
   const bg = isDark
     ? (['#0B0F1A', '#0E1626'] as const)
-    : (['#F5F7FA', '#E8F7F1'] as const);
+    : (['#F4F6FA', '#EAF0FA'] as const);
 
   return (
     <LinearGradient colors={bg} style={styles.fill}>

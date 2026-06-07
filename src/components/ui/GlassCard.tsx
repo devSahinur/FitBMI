@@ -1,5 +1,11 @@
 import React, { memo } from 'react';
-import { View, StyleSheet, type ViewProps, type ViewStyle } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  type ViewProps,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 import { BlurView } from 'expo-blur';
 import { useTheme } from '@/hooks/useTheme';
 import { radius, shadows } from '@/theme';
@@ -7,7 +13,7 @@ import { radius, shadows } from '@/theme';
 interface GlassCardProps extends ViewProps {
   intensity?: number;
   padded?: boolean;
-  style?: ViewStyle | ViewStyle[];
+  style?: StyleProp<ViewStyle>;
 }
 
 /**

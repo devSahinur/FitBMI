@@ -26,8 +26,10 @@ yarn-error.*
 # macOS
 .DS_Store
 
-# Env
+# Env (keep the example, ignore real keys)
+.env
 .env*.local
+!.env.example
 
 # Build
 android/

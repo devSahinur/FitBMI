@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { View, Pressable, Switch, StyleSheet } from 'react-native';
 import { icons, ChevronRight } from 'lucide-react-native';
 import { useTheme } from '@/hooks/useTheme';
-import { palette } from '@/theme';
+import { palette, radius } from '@/theme';
 import { Text } from './Text';
 
 interface SettingRowProps {
@@ -14,6 +14,8 @@ interface SettingRowProps {
   onValueChange?: (v: boolean) => void;
   onPress?: () => void;
   rightText?: string;
+  /** Greys the row, shows a "Soon" badge and ignores presses. */
+  disabled?: boolean;
 }
 
 /** Reusable row for the Profile/Settings screens (toggle or navigation). */
@@ -25,6 +27,7 @@ function SettingRowComponent({
   onValueChange,
   onPress,
   rightText,
+  disabled = false,
 }: SettingRowProps) {
   const { colors } = useTheme();
   const Icon = icon ? (icons[icon] ?? icons.Settings) : null;
@@ -33,12 +36,20 @@ function SettingRowComponent({
   return (
     <Pressable
       accessibilityRole={isSwitch ? 'switch' : 'button'}
-      accessibilityState={isSwitch ? { checked: value } : undefined}
+      accessibilityState={
+        disabled
+          ? { disabled: true }
+          : isSwitch
+            ? { checked: value }
+            : undefined
+      }
+      disabled={disabled}
       onPress={() => {
+        if (disabled) return;
         if (isSwitch) onValueChange?.(!value);
         else onPress?.();
       }}
-      style={styles.row}
+      style={[styles.row, { opacity: disabled ? 0.5 : 1 }]}
     >
       {Icon ? (
         <View style={[styles.iconWrap, { backgroundColor: colors.surfaceAlt }]}>
@@ -53,7 +64,13 @@ function SettingRowComponent({
           </Text>
         ) : null}
       </View>
-      {isSwitch ? (
+      {disabled ? (
+        <View style={[styles.soon, { backgroundColor: colors.surfaceAlt }]}>
+          <Text variant="label" tone="muted">
+            Soon
+          </Text>
+        </View>
+      ) : isSwitch ? (
         <Switch
           value={value}
           onValueChange={onValueChange}
@@ -86,6 +103,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   labelCol: { flex: 1, gap: 2 },
+  soon: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: radius.pill,
+  },
 });
 
 export const SettingRow = memo(SettingRowComponent);

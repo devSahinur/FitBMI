@@ -1,7 +1,8 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { MotiView } from 'moti';
 import { useRouter } from 'expo-router';
+import { useQueryClient } from '@tanstack/react-query';
 import { Flame, Quote } from 'lucide-react-native';
 
 import {
@@ -23,6 +24,7 @@ import { useSettingsStore } from '@/store/settings.store';
 import { greetingForHour, toDateKey } from '@/utils/date';
 import { formatWeight } from '@/utils/format';
 import { quoteOfTheDay } from '@/constants/quotes';
+import { DailyInsights } from '@/components/ai/DailyInsights';
 
 export function HomeScreen() {
   const { colors } = useTheme();
@@ -34,6 +36,14 @@ export function HomeScreen() {
 
   const { bmi, category } = useBMI(profile.currentWeightKg, profile.heightCm);
   const quote = useMemo(() => quoteOfTheDay(), []);
+
+  const queryClient = useQueryClient();
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await queryClient.invalidateQueries({ queryKey: ['ai', 'insights'] });
+    setTimeout(() => setRefreshing(false), 600);
+  }, [queryClient]);
 
   const summary = [
     {
@@ -78,7 +88,7 @@ export function HomeScreen() {
   ];
 
   return (
-    <ScreenContainer>
+    <ScreenContainer refreshing={refreshing} onRefresh={onRefresh}>
       {/* Header */}
       <MotiView
         from={{ opacity: 0, translateY: -12 }}
@@ -132,6 +142,9 @@ export function HomeScreen() {
           </View>
         ))}
       </View>
+
+      {/* AI daily insights */}
+      <DailyInsights />
 
       {/* Goals snapshot */}
       <AnimatedCard index={2}>

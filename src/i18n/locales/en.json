@@ -1,0 +1,42 @@
+{
+  "tabs": {
+    "home": "Home",
+    "calculator": "BMI",
+    "ai": "AI",
+    "history": "History",
+    "tracker": "Tracker",
+    "profile": "Profile"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "generate": "Generate",
+    "share": "Share",
+    "delete": "Delete",
+    "clearAll": "Clear all",
+    "today": "Today"
+  },
+  "home": {
+    "todaySummary": "Today's summary",
+    "goals": "Goals",
+    "aiInsights": "AI Insights"
+  },
+  "ai": {
+    "studio": "AI Studio",
+    "coach": "AI Health Coach",
+    "mealPlan": "Meal Plan",
+    "workout": "Workout",
+    "recipe": "Recipes",
+    "goalPlanner": "Goal Planner",
+    "weeklyReport": "Weekly Report",
+    "disclaimer": "AI responses are informational only and not medical advice."
+  },
+  "profile": {
+    "units": "Units",
+    "theme": "Theme",
+    "style": "Style",
+    "notifications": "Notifications",
+    "premium": "Premium",
+    "language": "Language"
+  }
+}

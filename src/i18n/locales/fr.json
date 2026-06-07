@@ -1,0 +1,24 @@
+{
+  "tabs": {
+    "home": "Accueil",
+    "calculator": "IMC",
+    "ai": "IA",
+    "history": "Historique",
+    "tracker": "Suivi",
+    "profile": "Profil"
+  },
+  "common": {
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "generate": "Générer",
+    "share": "Partager",
+    "delete": "Supprimer",
+    "clearAll": "Tout effacer",
+    "today": "Aujourd'hui"
+  },
+  "ai": {
+    "studio": "Studio IA",
+    "coach": "Coach santé IA",
+    "disclaimer": "Les réponses de l'IA sont uniquement informatives et ne constituent pas un avis médical."
+  }
+}

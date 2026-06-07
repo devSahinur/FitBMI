@@ -55,9 +55,12 @@ export const DEFAULT_GOALS: Goals = {
 export const DEFAULT_PREMIUM: PremiumFlags = {
   removeAds: false,
   unlimitedHistory: false,
+  unlimitedAiChats: false,
   advancedAnalytics: false,
+  advancedReports: false,
   customThemes: false,
   weeklyReports: false,
+  exportPdf: false,
 };
 
 /** History records allowed on the free tier. */
@@ -104,7 +107,9 @@ export const SUPPORTED_LANGUAGES = [
   { code: 'es', label: 'Español' },
   { code: 'fr', label: 'Français' },
   { code: 'de', label: 'Deutsch' },
+  { code: 'ar', label: 'العربية' },
   { code: 'hi', label: 'हिन्दी' },
+  { code: 'bn', label: 'বাংলা' },
 ] as const;
 
 // AdMob test unit IDs (safe defaults; replace before production).
@@ -112,4 +117,5 @@ export const ADMOB_TEST_IDS = {
   banner: 'ca-app-pub-3940256099942544/6300978111',
   interstitial: 'ca-app-pub-3940256099942544/1033173712',
   rewarded: 'ca-app-pub-3940256099942544/5224354917',
+  appOpen: 'ca-app-pub-3940256099942544/9257395921',
 } as const;

@@ -12,6 +12,12 @@ export { SettingRow } from './ui/SettingRow';
 export { SegmentedControl } from './ui/SegmentedControl';
 export { Sheet, type SheetRef } from './ui/Sheet';
 
+// Premium UI
+export { Skeleton, SkeletonCard } from './ui/Skeleton';
+export { AnimatedGradientCard } from './ui/AnimatedGradientCard';
+export { ExpandableFAB, type FABAction } from './ui/ExpandableFAB';
+export { SuccessCheck } from './ui/SuccessCheck';
+
 // Animated / data viz
 export { AnimatedCounter } from './ui/AnimatedCounter';
 export { CircularProgress } from './ui/CircularProgress';
@@ -26,3 +32,4 @@ export { TrendChart } from './charts/TrendChart';
 export { ScreenContainer } from './layout/ScreenContainer';
 export { SectionHeader } from './layout/SectionHeader';
 export { EmptyState } from './layout/EmptyState';
+export { ErrorState } from './layout/ErrorState';

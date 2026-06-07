@@ -1,8 +1,10 @@
 import React, { forwardRef, useCallback, useMemo } from 'react';
 import { StyleSheet } from 'react-native';
-import BottomSheet, {
+import {
+  BottomSheetModal,
   BottomSheetBackdrop,
   BottomSheetView,
+  BottomSheetScrollView,
   type BottomSheetBackdropProps,
 } from '@gorhom/bottom-sheet';
 import { useTheme } from '@/hooks/useTheme';
@@ -12,13 +14,19 @@ interface SheetProps {
   children: React.ReactNode;
   snapPoints?: (string | number)[];
   onClose?: () => void;
+  /** Use a scrollable body (for long forms + keyboard). */
+  scrollable?: boolean;
 }
 
-export type SheetRef = BottomSheet;
+export type SheetRef = BottomSheetModal;
 
-/** Themed bottom sheet with animated backdrop and rounded glass surface. */
-export const Sheet = forwardRef<BottomSheet, SheetProps>(
-  ({ children, snapPoints, onClose }, ref) => {
+/**
+ * Themed bottom sheet built on BottomSheetModal so it renders in a portal
+ * above the UI (and never intercepts touches on the screen when closed).
+ * Open with ref.present(), close with ref.dismiss().
+ */
+export const Sheet = forwardRef<BottomSheetModal, SheetProps>(
+  ({ children, snapPoints, onClose, scrollable = false }, ref) => {
     const { colors } = useTheme();
     const points = useMemo(() => snapPoints ?? ['55%'], [snapPoints]);
 
@@ -35,13 +43,15 @@ export const Sheet = forwardRef<BottomSheet, SheetProps>(
     );
 
     return (
-      <BottomSheet
+      <BottomSheetModal
         ref={ref}
-        index={-1}
         snapPoints={points}
         enablePanDownToClose
-        onClose={onClose}
+        onDismiss={onClose}
         backdropComponent={renderBackdrop}
+        keyboardBehavior="interactive"
+        keyboardBlurBehavior="restore"
+        android_keyboardInputMode="adjustResize"
         backgroundStyle={{
           backgroundColor: colors.surface,
           borderTopLeftRadius: radius.xl,
@@ -49,8 +59,18 @@ export const Sheet = forwardRef<BottomSheet, SheetProps>(
         }}
         handleIndicatorStyle={{ backgroundColor: colors.textMuted }}
       >
-        <BottomSheetView style={styles.content}>{children}</BottomSheetView>
-      </BottomSheet>
+        {scrollable ? (
+          <BottomSheetScrollView
+            contentContainerStyle={styles.content}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            {children}
+          </BottomSheetScrollView>
+        ) : (
+          <BottomSheetView style={styles.content}>{children}</BottomSheetView>
+        )}
+      </BottomSheetModal>
     );
   },
 );

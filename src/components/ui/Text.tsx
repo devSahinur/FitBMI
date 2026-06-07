@@ -1,26 +1,23 @@
 import React, { memo } from 'react';
 import { Text as RNText, type TextProps } from 'react-native';
 import { useTheme } from '@/hooks/useTheme';
+import { typography, type TextVariant } from '@/theme/typography';
 
-type Variant = 'h1' | 'h2' | 'h3' | 'title' | 'body' | 'caption' | 'label';
-type Tone = 'default' | 'muted' | 'primary' | 'inverse';
+type Tone =
+  | 'default'
+  | 'muted'
+  | 'primary'
+  | 'inverse'
+  | 'success'
+  | 'warning'
+  | 'error';
 
 interface AppTextProps extends TextProps {
-  variant?: Variant;
+  variant?: TextVariant;
   tone?: Tone;
 }
 
-const SIZES: Record<Variant, { fontSize: number; fontWeight: '400' | '500' | '600' | '700' }> = {
-  h1: { fontSize: 32, fontWeight: '700' },
-  h2: { fontSize: 24, fontWeight: '700' },
-  h3: { fontSize: 20, fontWeight: '600' },
-  title: { fontSize: 18, fontWeight: '600' },
-  body: { fontSize: 15, fontWeight: '400' },
-  caption: { fontSize: 13, fontWeight: '400' },
-  label: { fontSize: 12, fontWeight: '500' },
-};
-
-/** Theme-aware typography primitive with accessible defaults. */
+/** Theme-aware typography primitive (Poppins/Inter) with accessible defaults. */
 function AppTextComponent({
   variant = 'body',
   tone = 'default',
@@ -35,12 +32,18 @@ function AppTextComponent({
         ? colors.primary
         : tone === 'inverse'
           ? colors.textInverse
-          : colors.text;
+          : tone === 'success'
+            ? colors.success
+            : tone === 'warning'
+              ? colors.warning
+              : tone === 'error'
+                ? colors.error
+                : colors.text;
 
   return (
     <RNText
       maxFontSizeMultiplier={1.6}
-      style={[SIZES[variant], { color }, style]}
+      style={[typography[variant], { color }, style]}
       {...rest}
     />
   );

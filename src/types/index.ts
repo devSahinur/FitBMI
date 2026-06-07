@@ -3,6 +3,13 @@
 export type UnitSystem = 'metric' | 'imperial';
 export type Gender = 'male' | 'female' | 'other';
 export type ThemeMode = 'light' | 'dark' | 'system';
+export type ThemeVariant =
+  | 'glass'
+  | 'neumorphism'
+  | 'amoled'
+  | 'green'
+  | 'ocean'
+  | 'purple';
 
 export type BMICategory =
   | 'underweight'
@@ -65,6 +72,7 @@ export interface Goals {
 export interface AppSettings {
   unit: UnitSystem;
   themeMode: ThemeMode;
+  themeVariant: ThemeVariant;
   language: string;
   haptics: boolean;
   notifications: {
@@ -94,9 +102,12 @@ export interface Achievement {
 export interface PremiumFlags {
   removeAds: boolean;
   unlimitedHistory: boolean;
+  unlimitedAiChats: boolean;
   advancedAnalytics: boolean;
+  advancedReports: boolean;
   customThemes: boolean;
   weeklyReports: boolean;
+  exportPdf: boolean;
 }
 
 export interface ChartPoint {

@@ -2,18 +2,14 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 import { BlurView } from 'expo-blur';
 import { Platform, StyleSheet } from 'react-native';
-import {
-  Home,
-  Calculator,
-  History as HistoryIcon,
-  Activity,
-  User,
-} from 'lucide-react-native';
+import { useTranslation } from 'react-i18next';
+import { Home, Calculator, Activity, User, Sparkles } from 'lucide-react-native';
 import { useTheme } from '@/hooks/useTheme';
 import { palette } from '@/theme';
 
 export default function TabsLayout() {
   const { colors, isDark } = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Tabs
@@ -52,32 +48,32 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: t('tabs.home'),
           tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
         }}
       />
       <Tabs.Screen
         name="calculator"
         options={{
-          title: 'BMI',
+          title: t('tabs.calculator'),
           tabBarIcon: ({ color, size }) => (
             <Calculator size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="history"
+        name="ai"
         options={{
-          title: 'History',
+          title: t('tabs.ai'),
           tabBarIcon: ({ color, size }) => (
-            <HistoryIcon size={size} color={color} />
+            <Sparkles size={size} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="tracker"
         options={{
-          title: 'Tracker',
+          title: t('tabs.tracker'),
           tabBarIcon: ({ color, size }) => (
             <Activity size={size} color={color} />
           ),
@@ -86,7 +82,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: t('tabs.profile'),
           tabBarIcon: ({ color, size }) => <User size={size} color={color} />,
         }}
       />

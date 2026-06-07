@@ -1,7 +1,6 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
-import type BottomSheet from '@gorhom/bottom-sheet';
-import { Plus } from 'lucide-react-native';
+import { Plus, Scale, Droplets, Moon, Flame, Footprints } from 'lucide-react-native';
 
 import {
   ScreenContainer,
@@ -12,18 +11,24 @@ import {
   StatCard,
   TrendChart,
   Chip,
-  FAB,
+  ExpandableFAB,
   Sheet,
   Field,
   Button,
   Text,
+  type FABAction,
+  type SheetRef,
 } from '@/components';
+import { palette } from '@/theme';
 import { useHaptics } from '@/hooks/useHaptics';
 import { useStreak } from '@/hooks/useStreak';
-import { palette } from '@/theme';
 import { useHealthStore } from '@/store/health.store';
 import { useProfileStore } from '@/store/profile.store';
 import { useAchievementsStore } from '@/store/achievements.store';
+import {
+  useGamificationStore,
+  DAILY_CHALLENGES,
+} from '@/store/gamification.store';
 import { lastNDays, toDateKey } from '@/utils/date';
 import { average, trendPct } from '@/utils/stats';
 import { calculateBMI } from '@/utils/bmi';
@@ -34,7 +39,7 @@ type Range = 7 | 30;
 
 export function TrackerScreen() {
   const haptic = useHaptics();
-  const sheetRef = useRef<BottomSheet>(null);
+  const sheetRef = useRef<SheetRef>(null);
 
   const entries = useHealthStore((s) => s.entries);
   // Derive (don't select) the sorted list — selecting it would return a new
@@ -45,6 +50,7 @@ export function TrackerScreen() {
     [entries],
   );
   const upsert = useHealthStore((s) => s.upsert);
+  const increment = useHealthStore((s) => s.increment);
   const { profile, goals } = useProfileStore();
   const unlock = useAchievementsStore((s) => s.unlock);
   const streak = useStreak();
@@ -96,7 +102,7 @@ export function TrackerScreen() {
       sleep: today?.sleepHours ? String(today.sleepHours) : '',
       steps: today?.steps ? String(today.steps) : '',
     });
-    sheetRef.current?.expand();
+    sheetRef.current?.present();
   };
 
   const saveDraft = () => {
@@ -113,12 +119,48 @@ export function TrackerScreen() {
     if ((num(draft.water) ?? 0) >= goals.waterMlPerDay) unlock('water-goal');
     if (streak + 1 >= 7) unlock('streak-7');
     if (streak + 1 >= 30) unlock('streak-30');
+
+    // Gamification: daily check-in + challenge completion
+    const gam = useGamificationStore.getState();
+    gam.checkIn();
+    if (num(draft.weight) !== undefined)
+      gam.completeChallenge(DAILY_CHALLENGES[0]!); // log weight
+    if ((num(draft.water) ?? 0) >= goals.waterMlPerDay)
+      gam.completeChallenge(DAILY_CHALLENGES[1]!); // hit water
+    if (num(draft.sleep) !== undefined)
+      gam.completeChallenge(DAILY_CHALLENGES[3]!); // log sleep
+
     haptic('success');
-    sheetRef.current?.close();
+    sheetRef.current?.dismiss();
   };
 
+  const fabActions: FABAction[] = [
+    { label: 'Add Weight', icon: Scale, color: palette.primary, onPress: openSheet },
+    {
+      label: '+250ml Water',
+      icon: Droplets,
+      color: palette.secondary,
+      onPress: () => {
+        increment('waterMl', 250);
+        haptic('success');
+      },
+    },
+    { label: 'Add Sleep', icon: Moon, color: '#9D7BFF', onPress: openSheet },
+    { label: 'Add Calories', icon: Flame, color: palette.warning, onPress: openSheet },
+    {
+      label: '+1000 Steps',
+      icon: Footprints,
+      color: palette.accent,
+      onPress: () => {
+        increment('steps', 1000);
+        haptic('success');
+      },
+    },
+  ];
+
   return (
-    <ScreenContainer>
+    <View style={styles.fill}>
+      <ScreenContainer>
       <SectionHeader title="Health Tracker" />
 
       {/* Streak */}
@@ -249,45 +291,53 @@ export function TrackerScreen() {
           color={metric === 'water' ? palette.secondary : palette.primary}
         />
       </GlassCard>
+      </ScreenContainer>
 
-      <FAB onPress={openSheet} />
+      {/* FAB + sheet — overlays rendered outside the ScrollView. */}
+      <ExpandableFAB actions={fabActions} />
 
       {/* Logging sheet */}
-      <Sheet ref={sheetRef} snapPoints={['75%']}>
+      <Sheet ref={sheetRef} snapPoints={['80%']}>
         <Text variant="h3">Log today</Text>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ gap: 12 }}>
             <Field
+          bottomSheet
               label="Weight (kg)"
               keyboardType="decimal-pad"
               value={draft.weight}
               onChangeText={(v) => setDraft((d) => ({ ...d, weight: v }))}
             />
             <Field
+          bottomSheet
               label="Body Fat (%)"
               keyboardType="decimal-pad"
               value={draft.bodyFat}
               onChangeText={(v) => setDraft((d) => ({ ...d, bodyFat: v }))}
             />
             <Field
+          bottomSheet
               label="Water (ml)"
               keyboardType="number-pad"
               value={draft.water}
               onChangeText={(v) => setDraft((d) => ({ ...d, water: v }))}
             />
             <Field
+          bottomSheet
               label="Calories (kcal)"
               keyboardType="number-pad"
               value={draft.calories}
               onChangeText={(v) => setDraft((d) => ({ ...d, calories: v }))}
             />
             <Field
+          bottomSheet
               label="Sleep (hours)"
               keyboardType="decimal-pad"
               value={draft.sleep}
               onChangeText={(v) => setDraft((d) => ({ ...d, sleep: v }))}
             />
             <Field
+          bottomSheet
               label="Steps"
               keyboardType="number-pad"
               value={draft.steps}
@@ -301,11 +351,12 @@ export function TrackerScreen() {
           </View>
         </ScrollView>
       </Sheet>
-    </ScreenContainer>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  fill: { flex: 1 },
   streakCard: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   rings: { gap: 20, paddingVertical: 8, paddingRight: 8 },
   statGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },

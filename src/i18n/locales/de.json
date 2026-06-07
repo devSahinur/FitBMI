@@ -1,0 +1,24 @@
+{
+  "tabs": {
+    "home": "Start",
+    "calculator": "BMI",
+    "ai": "KI",
+    "history": "Verlauf",
+    "tracker": "Tracker",
+    "profile": "Profil"
+  },
+  "common": {
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "generate": "Erstellen",
+    "share": "Teilen",
+    "delete": "Löschen",
+    "clearAll": "Alles löschen",
+    "today": "Heute"
+  },
+  "ai": {
+    "studio": "KI-Studio",
+    "coach": "KI-Gesundheitscoach",
+    "disclaimer": "KI-Antworten dienen nur zur Information und sind kein medizinischer Rat."
+  }
+}

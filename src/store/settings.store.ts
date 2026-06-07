@@ -1,12 +1,13 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
-import type { AppSettings, ThemeMode, UnitSystem } from '@/types';
+import type { AppSettings, ThemeMode, ThemeVariant, UnitSystem } from '@/types';
 import { STORAGE_KEYS } from '@/constants';
 import { zustandStorage } from '@/services/storage.service';
 
 interface SettingsState extends AppSettings {
   setUnit: (unit: UnitSystem) => void;
   setThemeMode: (mode: ThemeMode) => void;
+  setThemeVariant: (variant: ThemeVariant) => void;
   setLanguage: (language: string) => void;
   toggleHaptics: () => void;
   setNotification: (
@@ -19,6 +20,7 @@ interface SettingsState extends AppSettings {
 const defaults: AppSettings = {
   unit: 'metric',
   themeMode: 'system',
+  themeVariant: 'glass',
   language: 'en',
   haptics: true,
   notifications: {
@@ -36,6 +38,7 @@ export const useSettingsStore = create<SettingsState>()(
       ...defaults,
       setUnit: (unit) => set({ unit }),
       setThemeMode: (themeMode) => set({ themeMode }),
+      setThemeVariant: (themeVariant) => set({ themeVariant }),
       setLanguage: (language) => set({ language }),
       toggleHaptics: () => set((s) => ({ haptics: !s.haptics })),
       setNotification: (key, value) =>
