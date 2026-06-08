@@ -6,254 +6,330 @@
     <title>FitBMI — BMI Calculator &amp; AI Health Coach</title>
     <meta
       name="description"
-      content="FitBMI is a beautiful, privacy-first BMI calculator and health tracker with an AI health coach. By Sahinur."
+      content="FitBMI is a beautiful, privacy-first BMI calculator and health tracker with an AI health coach. Track your BMI, water, sleep, calories & live steps. By Sahinur."
     />
     <meta property="og:title" content="FitBMI — BMI Calculator & AI Health Coach" />
-    <meta
-      property="og:description"
-      content="Track your BMI, build healthy habits, and get personalised AI guidance. Private & offline."
-    />
+    <meta property="og:description" content="Track your BMI, build healthy habits, and get personalised AI guidance. Private & offline." />
     <meta property="og:image" content="./assets/feature.png" />
+    <meta name="theme-color" content="#0b0f1a" />
+    <link rel="icon" href="./assets/icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <style>
       :root {
         --primary: #00c897;
         --secondary: #00a8ff;
         --accent: #ffb800;
         --ink: #0f172a;
-        --muted: #64748b;
-        --bg: #f7f8fa;
-        --card: #ffffff;
-        --border: #e6eaf0;
+        --muted: #6b7a90;
+        --bg: #ffffff;
+        --soft: #f4f6fb;
+        --line: #e9edf4;
+        --d1: #0b0f1a;
+        --d2: #0e1626;
+        --radius: 22px;
+        --shadow: 0 24px 60px rgba(8, 20, 40, 0.16);
       }
       * { box-sizing: border-box; }
       html { scroll-behavior: smooth; }
       body {
         margin: 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-          Helvetica, Arial, sans-serif;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         color: var(--ink);
         background: var(--bg);
         line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
       }
+      h1, h2, h3, .brand { font-family: "Poppins", sans-serif; letter-spacing: -0.02em; }
       a { color: inherit; text-decoration: none; }
-      .container { max-width: 1100px; margin: 0 auto; padding: 0 22px; }
+      .wrap { max-width: 1120px; margin: 0 auto; padding: 0 22px; }
+      .grad-text {
+        background: linear-gradient(120deg, var(--primary), var(--secondary) 60%, #7c5cfc);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+      }
 
       /* Nav */
       header {
-        position: sticky; top: 0; z-index: 20;
-        background: rgba(247, 248, 250, 0.85);
-        backdrop-filter: saturate(160%) blur(12px);
-        border-bottom: 1px solid var(--border);
+        position: sticky; top: 0; z-index: 50;
+        background: rgba(255, 255, 255, 0.72);
+        backdrop-filter: saturate(180%) blur(14px);
+        border-bottom: 1px solid var(--line);
       }
-      .nav { display: flex; align-items: center; gap: 14px; height: 64px; }
-      .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; }
-      .brand img { width: 32px; height: 32px; border-radius: 9px; }
-      .nav .spacer { flex: 1; }
-      .nav a.link { color: var(--muted); font-weight: 600; font-size: 15px; }
-      .nav a.link:hover { color: var(--ink); }
-      @media (max-width: 620px) { .nav a.link { display: none; } }
+      .nav { display: flex; align-items: center; gap: 16px; height: 66px; }
+      .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 19px; }
+      .brand img { width: 34px; height: 34px; border-radius: 10px; box-shadow: 0 6px 16px rgba(0,168,255,.25); }
+      .nav .grow { flex: 1; }
+      .nav .link { color: var(--muted); font-weight: 600; font-size: 15px; }
+      .nav .link:hover { color: var(--ink); }
+      .btn {
+        display: inline-flex; align-items: center; gap: 9px; font-weight: 700; font-size: 15px;
+        padding: 12px 20px; border-radius: 999px; transition: transform .15s ease, box-shadow .2s ease; cursor: pointer; border: 0;
+      }
+      .btn:hover { transform: translateY(-2px); }
+      .btn-primary { color: #fff; background: linear-gradient(120deg, var(--primary), var(--secondary)); box-shadow: 0 12px 28px rgba(0,168,255,.32); }
+      .btn-dark { color: #fff; background: #0f172a; }
+      .btn-ghost { background: #fff; border: 1px solid var(--line); color: var(--ink); }
+      @media (max-width: 720px) { .nav .link { display: none; } }
 
       /* Hero */
-      .hero { position: relative; overflow: hidden; padding: 72px 0 40px; }
-      .hero::before {
-        content: ""; position: absolute; width: 620px; height: 620px;
-        right: -180px; top: -220px; border-radius: 50%;
-        background: radial-gradient(circle at center, rgba(0, 200, 151, 0.18), transparent 70%);
+      .hero { position: relative; overflow: hidden; background: radial-gradient(1200px 600px at 80% -10%, #e9f7ff, transparent 60%), radial-gradient(900px 500px at 0% 10%, #e7fbf3, transparent 55%); }
+      .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 40px; align-items: center; padding: 70px 0 60px; }
+      @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; text-align: center; padding: 48px 0; } }
+      .chip {
+        display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px;
+        background: #fff; border: 1px solid var(--line); color: #0c8f72; padding: 7px 14px; border-radius: 999px;
+        box-shadow: 0 6px 18px rgba(8,20,40,.06);
       }
-      .hero-grid {
-        display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center;
-      }
-      @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; text-align: center; } }
-      .pill {
-        display: inline-flex; align-items: center; gap: 8px;
-        background: rgba(0, 200, 151, 0.1); color: #00866a;
-        padding: 6px 14px; border-radius: 999px; font-weight: 700; font-size: 13px;
-      }
-      h1 { font-size: 46px; line-height: 1.1; margin: 18px 0 14px; letter-spacing: -0.5px; }
-      h1 .grad {
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text; background-clip: text; color: transparent;
-      }
-      .lead { font-size: 19px; color: var(--muted); margin: 0 0 26px; }
+      .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 0 4px rgba(0,200,151,.18); }
+      h1 { font-size: clamp(38px, 6vw, 60px); line-height: 1.05; margin: 20px 0 16px; font-weight: 800; }
+      .lead { font-size: 19px; color: var(--muted); max-width: 540px; margin: 0 0 28px; }
+      @media (max-width: 900px) { .lead { margin-left: auto; margin-right: auto; } }
       .cta { display: flex; gap: 12px; flex-wrap: wrap; }
-      @media (max-width: 860px) { .cta { justify-content: center; } }
-      .btn {
-        display: inline-flex; align-items: center; gap: 8px;
-        padding: 14px 24px; border-radius: 999px; font-weight: 700; font-size: 15px;
-      }
-      .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; box-shadow: 0 12px 30px rgba(0, 168, 255, 0.3); }
-      .btn-ghost { background: var(--card); border: 1px solid var(--border); color: var(--ink); }
-      .hero-phone { display: flex; justify-content: center; }
-      .hero-phone img {
-        width: 270px; max-width: 80%; border-radius: 32px;
-        box-shadow: 0 30px 70px rgba(15, 23, 42, 0.22);
-        border: 1px solid var(--border);
-      }
-      .credit { margin-top: 18px; color: var(--muted); font-size: 14px; }
+      @media (max-width: 900px) { .cta { justify-content: center; } }
+      .play { background: #0f172a; color: #fff; display: inline-flex; align-items: center; gap: 11px; padding: 11px 22px; border-radius: 14px; transition: transform .15s; }
+      .play:hover { transform: translateY(-2px); }
+      .play small { display: block; font-size: 10px; opacity: .8; letter-spacing: .12em; text-transform: uppercase; line-height: 1.2; }
+      .play b { font-size: 17px; font-family: "Poppins"; }
+      .credit { margin-top: 22px; color: var(--muted); font-size: 14px; }
       .credit b { color: var(--ink); }
 
+      /* Phone */
+      .phone-stage { display: flex; justify-content: center; position: relative; }
+      .glow { position: absolute; inset: -40px; background: radial-gradient(circle at 50% 40%, rgba(0,168,255,.35), transparent 60%); filter: blur(20px); z-index: 0; }
+      .phone {
+        position: relative; z-index: 1; width: 290px; max-width: 78vw; padding: 12px; border-radius: 44px;
+        background: linear-gradient(160deg, #1b2436, #0e1626); box-shadow: var(--shadow), inset 0 0 0 2px rgba(255,255,255,.06);
+        transform: rotate(-3deg); transition: transform .4s ease;
+      }
+      .phone:hover { transform: rotate(0deg) translateY(-6px); }
+      .phone::before { content: ""; position: absolute; top: 18px; left: 50%; transform: translateX(-50%); width: 110px; height: 22px; background: #0b0f1a; border-radius: 0 0 16px 16px; z-index: 2; }
+      .phone img { width: 100%; display: block; border-radius: 33px; }
+
+      /* Marquee trust */
+      .trust { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--soft); }
+      .trust .wrap { display: flex; flex-wrap: wrap; gap: 14px 34px; justify-content: center; padding: 18px 22px; }
+      .trust span { color: var(--muted); font-weight: 600; font-size: 14px; display: inline-flex; gap: 8px; align-items: center; }
+      .trust svg { width: 18px; height: 18px; color: var(--primary); }
+
       /* Sections */
-      section { padding: 56px 0; }
-      .section-title { text-align: center; font-size: 30px; margin: 0 0 8px; }
-      .section-sub { text-align: center; color: var(--muted); margin: 0 auto 36px; max-width: 560px; }
+      section { padding: 84px 0; }
+      .eyebrow { text-align: center; color: var(--primary); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: 13px; }
+      .title { text-align: center; font-size: clamp(28px, 4vw, 40px); margin: 8px 0 10px; font-weight: 800; }
+      .sub { text-align: center; color: var(--muted); max-width: 600px; margin: 0 auto 46px; font-size: 17px; }
 
       /* Features */
       .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-      @media (max-width: 860px) { .features { grid-template-columns: 1fr 1fr; } }
+      @media (max-width: 880px) { .features { grid-template-columns: 1fr 1fr; } }
       @media (max-width: 560px) { .features { grid-template-columns: 1fr; } }
       .feature {
-        background: var(--card); border: 1px solid var(--border);
-        border-radius: 20px; padding: 22px; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+        background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px;
+        transition: transform .2s ease, box-shadow .2s ease;
       }
-      .feature .ic {
-        width: 46px; height: 46px; border-radius: 13px; display: flex;
-        align-items: center; justify-content: center; margin-bottom: 12px; font-size: 22px;
-        background: rgba(0, 200, 151, 0.12);
-      }
-      .feature h3 { margin: 0 0 4px; font-size: 17px; }
-      .feature p { margin: 0; color: var(--muted); font-size: 14px; }
+      .feature:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+      .feature .ic { width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center; margin-bottom: 16px; background: linear-gradient(135deg, rgba(0,200,151,.14), rgba(0,168,255,.14)); }
+      .feature .ic svg { width: 26px; height: 26px; color: var(--primary); }
+      .feature h3 { margin: 0 0 6px; font-size: 18px; }
+      .feature p { margin: 0; color: var(--muted); font-size: 15px; }
 
-      /* Screenshots */
-      .shots { display: flex; gap: 18px; overflow-x: auto; padding: 8px 4px 18px; scroll-snap-type: x mandatory; }
-      .shots img {
-        width: 230px; flex: 0 0 auto; border-radius: 26px; scroll-snap-align: center;
-        border: 1px solid var(--border); box-shadow: 0 18px 44px rgba(15, 23, 42, 0.12); background: #fff;
-      }
+      /* Showcase (dark) */
+      .showcase { background: linear-gradient(160deg, var(--d1), var(--d2)); color: #fff; border-radius: 36px; overflow: hidden; position: relative; }
+      .showcase::after { content:""; position:absolute; width:500px; height:500px; right:-120px; top:-160px; border-radius:50%; background: radial-gradient(circle, rgba(0,200,151,.25), transparent 60%); }
+      .showcase-in { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; align-items: center; padding: 48px; position: relative; z-index: 1; }
+      @media (max-width: 820px) { .showcase-in { grid-template-columns: 1fr; padding: 34px; text-align: center; } }
+      .showcase h2 { font-size: 32px; margin: 10px 0 12px; }
+      .showcase p { color: #aab6c8; font-size: 17px; margin: 0 0 22px; }
+      .showcase .phone { transform: rotate(3deg); margin: 0 auto; }
+      .badges { display: flex; gap: 10px; flex-wrap: wrap; }
+      @media (max-width: 820px) { .badges { justify-content: center; } }
+      .badge2 { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); color: #dbe6f2; padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; }
 
-      /* CTA band */
-      .band {
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        border-radius: 28px; color: #fff; text-align: center; padding: 44px 24px;
+      /* Gallery */
+      .gallery { display: grid; grid-template-columns: repeat(5, 1fr); gap: 26px 20px; align-items: start; }
+      @media (max-width: 1040px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
+      @media (max-width: 660px) { .gallery { grid-template-columns: repeat(2, 1fr); } }
+      .shot { text-align: center; }
+      .frame {
+        position: relative; padding: 8px; border-radius: 30px;
+        background: linear-gradient(160deg, #232e43, #0d1422);
+        box-shadow: var(--shadow), inset 0 0 0 1.5px rgba(255, 255, 255, 0.06);
+        transition: transform .28s ease, box-shadow .28s ease;
       }
-      .band h2 { margin: 0 0 8px; font-size: 28px; }
-      .band p { margin: 0 0 22px; opacity: 0.92; }
+      .frame:hover { transform: translateY(-8px); box-shadow: 0 34px 70px rgba(8, 20, 40, 0.26); }
+      .frame::before { content: ""; position: absolute; right: -2px; top: 82px; width: 3px; height: 58px; background: #313d57; border-radius: 3px; }
+      .frame::after { content: ""; position: absolute; left: -2px; top: 70px; width: 3px; height: 34px; background: #313d57; border-radius: 3px; box-shadow: 0 44px 0 #313d57; }
+      .frame .scr { position: relative; border-radius: 24px; overflow: hidden; }
+      .frame img { width: 100%; display: block; }
+      .cap { margin-top: 14px; font-weight: 600; font-size: 14px; color: var(--muted); }
+
+      /* Themes */
+      .themes { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+      .swatch { width: 150px; border: 1px solid var(--line); border-radius: 18px; overflow: hidden; text-align: center; }
+      .swatch .bar { height: 78px; }
+      .swatch span { display: block; padding: 10px; font-weight: 600; font-size: 14px; }
+
+      /* CTA */
+      .cta-band { background: linear-gradient(120deg, var(--primary), var(--secondary)); color: #fff; border-radius: 32px; text-align: center; padding: 60px 24px; position: relative; overflow: hidden; }
+      .cta-band h2 { font-size: 32px; margin: 0 0 10px; }
+      .cta-band p { margin: 0 0 24px; opacity: .94; font-size: 18px; }
 
       /* Footer */
-      footer { border-top: 1px solid var(--border); padding: 30px 0 50px; color: var(--muted); font-size: 14px; }
-      .foot { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
-      .foot .spacer { flex: 1; }
+      footer { border-top: 1px solid var(--line); padding: 40px 0 56px; color: var(--muted); font-size: 14px; }
+      .foot { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; }
+      .foot .grow { flex: 1; }
       .foot a { color: var(--muted); font-weight: 600; }
       .foot a:hover { color: var(--ink); }
+      .disc { margin-top: 14px; font-size: 12.5px; color: #9aa7b8; }
+
+      /* reveal */
+      .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+      .reveal.in { opacity: 1; transform: none; }
     </style>
   </head>
   <body>
     <header>
-      <div class="container nav">
-        <a class="brand" href="#top">
-          <img src="./assets/icon.png" alt="FitBMI" />
-          FitBMI
-        </a>
-        <span class="spacer"></span>
+      <div class="wrap nav">
+        <a class="brand" href="#top"><img src="./assets/icon.png" alt="FitBMI" />FitBMI</a>
+        <span class="grow"></span>
         <a class="link" href="#features">Features</a>
-        <a class="link" href="#screens">Screenshots</a>
+        <a class="link" href="#screens">Screens</a>
+        <a class="link" href="#themes">Themes</a>
         <a class="link" href="./privacy.html">Privacy</a>
-        <a class="link" href="./terms.html">Terms</a>
+        <a class="btn btn-primary" href="#get">Get the app</a>
       </div>
     </header>
 
-    <a id="top"></a>
+    <span id="top"></span>
     <div class="hero">
-      <div class="container hero-grid">
+      <div class="wrap hero-grid">
         <div>
-          <span class="pill">⚡ Private &amp; offline · AI-powered</span>
-          <h1>Your health, <span class="grad">beautifully tracked</span></h1>
+          <span class="chip"><span class="dot"></span> Private &amp; offline · AI-powered</span>
+          <h1>Your health,<br /><span class="grad-text">beautifully tracked.</span></h1>
           <p class="lead">
-            FitBMI is a modern BMI calculator and health tracker with a built-in
-            AI health coach. Calculate your BMI, build healthy habits, and get
-            personalised guidance — all while your data stays on your device.
+            A modern BMI calculator and health tracker with a built-in AI coach.
+            Track BMI, water, sleep, calories and live steps — with smooth
+            animations and a glassmorphism design that feels premium.
           </p>
           <div class="cta">
-            <a class="btn btn-primary" href="#screens">See it in action</a>
-            <a class="btn btn-ghost" href="#features">Explore features</a>
+            <a class="play" href="#get">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M3 3l16 9-16 9V3z"/></svg>
+              <span><small>Get it on</small><b>Google Play</b></span>
+            </a>
+            <a class="btn btn-ghost" href="#screens">See screenshots</a>
           </div>
-          <p class="credit">
-            Designed &amp; built by <b>Sahinur</b> ·
-            <a href="mailto:infosahinur@gmail.com">infosahinur@gmail.com</a>
-          </p>
+          <p class="credit">Designed &amp; built by <b>Sahinur</b> · <a href="mailto:infosahinur@gmail.com" class="grad-text">infosahinur@gmail.com</a></p>
         </div>
-        <div class="hero-phone">
-          <img src="./assets/shot-home.png" alt="FitBMI home screen" />
+        <div class="phone-stage">
+          <div class="glow"></div>
+          <div class="phone"><img src="./assets/shot-home.png" alt="FitBMI home" /></div>
         </div>
       </div>
     </div>
 
-    <section id="features">
-      <div class="container">
-        <h2 class="section-title">Everything you need to stay on track</h2>
-        <p class="section-sub">
-          A complete wellness companion — calculator, coach, and tracker in one.
-        </p>
-        <div class="features">
-          <div class="feature">
-            <div class="ic">📊</div>
-            <h3>BMI Calculator</h3>
-            <p>Animated gauge, color-coded categories, and your healthy range.</p>
+    <div class="trust">
+      <div class="wrap">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> 100% on-device</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg> No account needed</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l1.9 5.8H20l-4.9 3.6L17 18l-5-3.7L7 18l1.9-5.6L4 8.8h6.1z"/></svg> AI-powered</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 010 18M12 3a15 15 0 000 18"/></svg> 7 languages</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> 60fps animations</span>
+      </div>
+    </div>
+
+    <section id="features" class="wrap">
+      <p class="eyebrow reveal">Features</p>
+      <h2 class="title reveal">Everything to stay on track</h2>
+      <p class="sub reveal">A complete wellness companion — calculator, coach and tracker in one beautiful app.</p>
+      <div class="features">
+        <div class="feature reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l2-6 4 12 2-6h6"/></svg></div><h3>BMI Calculator</h3><p>Animated gauge, color-coded categories and your personal healthy range.</p></div>
+        <div class="feature reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="M8 21h8M12 18v3M8.5 10h.01M15.5 10h.01"/></svg></div><h3>AI Health Coach</h3><p>Chat for fitness, nutrition, water, sleep and calorie advice, anytime.</p></div>
+        <div class="feature reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 16a3 3 0 003-3V6a2 2 0 10-4 0v8M20 16a3 3 0 01-3-3V6a2 2 0 114 0v8"/></svg></div><h3>Live Step Tracking</h3><p>Real-time steps from your device pedometer, with daily goals and streaks.</p></div>
+        <div class="feature reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3s6 6 6 11a6 6 0 01-12 0c0-5 6-11 6-11z"/></svg></div><h3>Daily Tracking</h3><p>Weight, water, sleep, calories and body fat with rich, animated charts.</p></div>
+        <div class="feature reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 21h8M12 17v4M6 4h12v4a6 6 0 01-12 0V4zM6 6H4v2a3 3 0 003 3M18 6h2v2a3 3 0 01-3 3"/></svg></div><h3>Rewards &amp; Streaks</h3><p>XP, levels, coins, a reward wheel and achievements keep you motivated.</p></div>
+        <div class="feature reveal"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="8.5" cy="10" r="1"/><circle cx="15.5" cy="10" r="1"/><circle cx="12" cy="15" r="1"/></svg></div><h3>Themes &amp; Languages</h3><p>Light, Dark &amp; AMOLED with 6 styles, plus 7 languages out of the box.</p></div>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="showcase reveal">
+        <div class="showcase-in">
+          <div>
+            <span class="chip" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16);color:#cfe9ff"><span class="dot"></span> AI Studio</span>
+            <h2>Your personal AI health coach</h2>
+            <p>Ask anything about fitness, nutrition or wellness and get personalised, streaming answers — plus AI-generated meal plans, workouts, recipes and weekly reports.</p>
+            <div class="badges">
+              <span class="badge2">Streaming replies</span>
+              <span class="badge2">Meal plans</span>
+              <span class="badge2">Workouts</span>
+              <span class="badge2">Weekly reports</span>
+            </div>
           </div>
-          <div class="feature">
-            <div class="ic">🤖</div>
-            <h3>AI Health Coach</h3>
-            <p>Chat for fitness, nutrition, water, sleep &amp; calorie advice.</p>
-          </div>
-          <div class="feature">
-            <div class="ic">👟</div>
-            <h3>Live Step Tracking</h3>
-            <p>Real-time steps from your device pedometer, plus daily goals.</p>
-          </div>
-          <div class="feature">
-            <div class="ic">💧</div>
-            <h3>Daily Tracking</h3>
-            <p>Weight, water, sleep, calories &amp; body fat with rich charts.</p>
-          </div>
-          <div class="feature">
-            <div class="ic">🏆</div>
-            <h3>Streaks &amp; Rewards</h3>
-            <p>XP, levels, coins, a reward wheel and achievements to stay motivated.</p>
-          </div>
-          <div class="feature">
-            <div class="ic">🎨</div>
-            <h3>Beautiful &amp; Private</h3>
-            <p>Light, Dark &amp; AMOLED themes, 7 languages, no account needed.</p>
-          </div>
+          <div class="phone-stage"><div class="phone"><img src="./assets/shot-coach.png" alt="AI coach" /></div></div>
         </div>
       </div>
     </section>
 
-    <section id="screens" style="background: #eef2f8;">
-      <div class="container">
-        <h2 class="section-title">Take a look</h2>
-        <p class="section-sub">A clean, modern interface in light and dark.</p>
-        <div class="shots">
-          <img src="./assets/shot-home.png" alt="Home" />
-          <img src="./assets/shot-bmi.png" alt="BMI calculator" />
-          <img src="./assets/shot-coach.png" alt="AI health coach" />
-          <img src="./assets/shot-tracker.png" alt="Health tracker" />
-          <img src="./assets/shot-profile.png" alt="Profile" />
+    <section id="screens" style="background:var(--soft);">
+      <div class="wrap">
+        <p class="eyebrow reveal">A closer look</p>
+        <h2 class="title reveal">Crafted, pixel by pixel</h2>
+        <p class="sub reveal">A consistent design system across every screen — in light and dark.</p>
+        <div class="gallery">
+          <div class="shot reveal"><div class="frame"><div class="scr"><img src="./assets/shot-home.png" alt="Home dashboard" /></div></div><p class="cap">Home dashboard</p></div>
+          <div class="shot reveal"><div class="frame"><div class="scr"><img src="./assets/shot-bmi.png" alt="BMI calculator" /></div></div><p class="cap">BMI calculator</p></div>
+          <div class="shot reveal"><div class="frame"><div class="scr"><img src="./assets/shot-coach.png" alt="AI health coach" /></div></div><p class="cap">AI health coach</p></div>
+          <div class="shot reveal"><div class="frame"><div class="scr"><img src="./assets/shot-tracker.png" alt="Health tracker" /></div></div><p class="cap">Health tracker</p></div>
+          <div class="shot reveal"><div class="frame"><div class="scr"><img src="./assets/shot-profile.png" alt="Profile &amp; settings" /></div></div><p class="cap">Profile &amp; settings</p></div>
         </div>
       </div>
     </section>
 
-    <section>
-      <div class="container">
-        <div class="band">
-          <h2>Start your journey to a healthier you</h2>
-          <p>Private by design. Your data never leaves your device.</p>
-          <a class="btn btn-ghost" href="#top" style="background:#fff;color:#0f172a;">Back to top ↑</a>
-        </div>
+    <section id="themes" class="wrap">
+      <p class="eyebrow reveal">Theming</p>
+      <h2 class="title reveal">Make it yours</h2>
+      <p class="sub reveal">Six theme styles that work in light, dark and pure-black AMOLED.</p>
+      <div class="themes">
+        <div class="swatch reveal"><div class="bar" style="background:linear-gradient(135deg,#00c897,#00a8ff)"></div><span>Glass</span></div>
+        <div class="swatch reveal"><div class="bar" style="background:#000"></div><span>AMOLED</span></div>
+        <div class="swatch reveal"><div class="bar" style="background:linear-gradient(135deg,#2e9e5b,#69d89a)"></div><span>Green Nature</span></div>
+        <div class="swatch reveal"><div class="bar" style="background:linear-gradient(135deg,#0ea5e9,#2563eb)"></div><span>Blue Ocean</span></div>
+        <div class="swatch reveal"><div class="bar" style="background:linear-gradient(135deg,#7c5cfc,#c026d3)"></div><span>Purple</span></div>
+        <div class="swatch reveal"><div class="bar" style="background:linear-gradient(135deg,#e6eaf0,#cfd6e2)"></div><span>Neumorph</span></div>
+      </div>
+    </section>
+
+    <section id="get" class="wrap">
+      <div class="cta-band reveal">
+        <h2>Start your journey to a healthier you</h2>
+        <p>Private by design. Your data never leaves your device.</p>
+        <a class="btn btn-dark" href="mailto:infosahinur@gmail.com">Contact the developer</a>
       </div>
     </section>
 
     <footer>
-      <div class="container foot">
-        <div>© 2026 FitBMI · Built by <b style="color:var(--ink)">Sahinur</b></div>
-        <span class="spacer"></span>
-        <a href="mailto:infosahinur@gmail.com">Contact</a>
-        <a href="./privacy.html">Privacy Policy</a>
-        <a href="./terms.html">Terms</a>
-      </div>
-      <div class="container" style="margin-top:14px; font-size:12px;">
-        This app is intended for general fitness and wellness purposes and does
-        not provide medical advice.
+      <div class="wrap">
+        <div class="foot">
+          <a class="brand" href="#top" style="font-size:17px"><img src="./assets/icon.png" alt="" style="width:28px;height:28px" />FitBMI</a>
+          <span class="grow"></span>
+          <a href="#features">Features</a>
+          <a href="#screens">Screenshots</a>
+          <a href="./privacy.html">Privacy Policy</a>
+          <a href="./terms.html">Terms</a>
+          <a href="mailto:infosahinur@gmail.com">Contact</a>
+        </div>
+        <p class="disc">© 2026 FitBMI · Built by Sahinur. This app is intended for general fitness and wellness purposes and does not provide medical advice.</p>
       </div>
     </footer>
+
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }),
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll(".reveal").forEach((el, i) => { el.style.transitionDelay = (i % 6) * 60 + "ms"; io.observe(el); });
+    </script>
   </body>
 </html>
